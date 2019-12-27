@@ -2,12 +2,7 @@ var listElement = document.querySelector('#app ul');
 var inputElement = document.querySelector('#app input');
 var buttonElement = document.querySelector('#app button');
 
-var todos = [
-    'Fazer Cafe',
-    'Trabalhar',
-    'Arrumar a Casa',
-    'Tomar Banho'
-]
+var todos =JSON.parse(localStorage.getItem('list_todos')) || [];
 
 function rendertodos(){
     listElement.innerHTML='';
@@ -19,6 +14,8 @@ function rendertodos(){
         var linkElement = document.createElement('a');
         linkElement.setAttribute('href', '#');
 
+        var pos = todos.indexOf(todo);
+        linkElement.setAttribute('onclick', 'deleteTodo('+pos+')')
         var linkText = document.createTextNode('Excluir');
 
         linkElement.appendChild(linkText);
@@ -37,6 +34,17 @@ function addTodo(){
     inputElement.value='';
 
     rendertodos();
+    safeToStorage();
 }
 
 buttonElement.onclick=addTodo;
+
+function deleteTodo(pos){
+    todos.splice(pos,1);
+    rendertodos();
+    safeToStorage();
+}
+
+function safeToStorage(){
+    localStorage.setItem('list_todos', JSON.stringify(todos));
+}
