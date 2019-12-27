@@ -1,7 +1,7 @@
-alert("Teste ES6");
-
-class Teste {
-    metodo(){
-        
+class Matematica{
+    static soma(a, b){
+        return a+b;
     }
 }
+
+console.log(Matematica.soma(1,3));
